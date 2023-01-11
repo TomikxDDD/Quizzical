@@ -1,6 +1,5 @@
 import React from "react";
-
-import { View, Text } from "react-native";
+import {nanoid} from "nanoid"
 
 import AnswerField from "./AnswerField";
 import {shuffleArray} from "../functions/Functions.js"
@@ -11,19 +10,29 @@ export default function Question(props){
   let correctAnswer = props.questionData.correct_answer
   let incorrectAnswers = props.questionData.incorrect_answers
   let answers = incorrectAnswers.map(incAnswer => {
-    return <AnswerField answerText={incAnswer}/> 
+    let id = nanoid();
+    return <AnswerField key={id} answerText={incAnswer}/> 
   })
   answers.push(<AnswerField answerText={correctAnswer}/>)
   answers = shuffleArray(answers)
 
+  /** Decoding the text from API call; Code taken from 
+   * https://stackoverflow.com/questions/47962519/html-special-character-symbol-not-rendering-in-react-component 
+  */
+  const questionToDecode = props.questionData.question;
+  const parser = new DOMParser();
+  const decodedQuestion = parser.parseFromString(questionToDecode, 'text/html').body.textContent;
+
+  const [selectedAnswers, setSelectedAnswers] = React.useState("")
+
   return(
     <section className="question-container">
-      <View>
-        <h2 className="question-text"> {props.questionData.question} </h2>
+        <h2 className="question-text"> {decodedQuestion} </h2>
         <div className="answers-container">
           {answers}
         </div>
-      </View>
+        <div className="question-separator">
+        </div>
     </section>
   )
 }
