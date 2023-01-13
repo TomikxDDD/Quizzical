@@ -9,6 +9,9 @@ export default function QuestionsScreen(){
 
   const [questionData, setQuestionData] = React.useState([])
 
+  console.log(questionData)
+  console.log(checkAnswers)
+
   /* Calling open trivia database API */
   React.useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5")

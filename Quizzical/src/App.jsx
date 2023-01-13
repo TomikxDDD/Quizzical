@@ -9,6 +9,8 @@ function App() {
 
   const [showWelcomeScreen, setShowWelcomeScreen] = React.useState(true)
 
+  console.log(showWelcomeScreen)
+
   function startGame(){
     setShowWelcomeScreen(oldShowWelcomeScreen => !oldShowWelcomeScreen)
   }
