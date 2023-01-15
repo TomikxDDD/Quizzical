@@ -4,30 +4,65 @@ import {nanoid} from "nanoid"
 import AnswerField from "./AnswerField";
 import {shuffleArray, decodeTextFromAPI} from "../functions/Functions.js"
 
-export default function Question(props){
+import { memo } from "react";
 
-  /* Prepare the array of answers - combine correct and incorrect answers, shuffle them*/
-  let correctAnswer = props.questionData.correct_answer
-  let incorrectAnswers = props.questionData.incorrect_answers
-  let answers = incorrectAnswers.map(incAnswer => {
-    let id = nanoid();
-    return <AnswerField key={id} answerText={incAnswer}/> 
-  })
-  answers.push(<AnswerField answerText={correctAnswer}/>)
-  answers = shuffleArray(answers)
+function Question(props){
 
+  const [answers, setAnswers] = React.useState([]) // React state for storing each answer as an object inside of an array of questions
+
+  /**
+   * Function to select a single answer within one question. 
+   * If another function was selected, unselect it and select a currently clicked answer
+   * @param {*} id id of an answer
+   */
+  function selectAnswer(id){
+    setAnswers(oldAnswers => oldAnswers.map(oldAnswer => {
+      console.log(id, oldAnswer.id)
+      if (id == oldAnswer.id) {
+        return {...oldAnswer,
+                selected: true}
+      } else {
+        return {...oldAnswer,
+                selected: false}
+      }
+    }))
+  }
+
+  /* Prepare the array of answers (only texts) - combine correct and incorrect answers, shuffle them */
+  let correctAnswerTxt = props.questionData.correct_answer
+  let incorrectAnswersTxt = props.questionData.incorrect_answers
+  let answersTxt = [...incorrectAnswersTxt, correctAnswerTxt]
+  answersTxt = shuffleArray(answersTxt)
+
+  // Update the answers state, right now only at the begginning of the application
+  React.useEffect(() => {
+    let objAnswers = answersTxt.map(ansTxt => {
+      return {id:nanoid(),
+        answerTxt: ansTxt,
+        selected: false  
+      }
+    })
+    setAnswers(objAnswers)
+  }, [])
+
+  // Prepare an array of JSX AnswerField components
+  let answerFields = answers.map(answer => {
+    return <AnswerField key={answer.id} id={answer.id} answerText={answer.answerTxt} selected={answer.selected} handleClick={selectAnswer}/>
+  }) 
+
+  // Decode the question text from API to HTML readable format
   const decodedQuestionTxt = decodeTextFromAPI(props.questionData.question);
 
-  const [selectedAnswers, setSelectedAnswers] = React.useState("")
-
+  // Return JSX code 
   return(
     <section className="question-container">
         <h2 className="question-text"> {decodedQuestionTxt} </h2>
         <div className="answers-container">
-          {answers}
+          {answerFields}
         </div>
         <div className="question-separator">
         </div>
     </section>
   )
 }
+export default memo(Question)

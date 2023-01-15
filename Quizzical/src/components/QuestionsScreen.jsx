@@ -3,14 +3,16 @@ import {nanoid} from "nanoid"
 
 import Question from "./Question.jsx"
 
-export default function QuestionsScreen(){
+import { memo } from "react";
+
+function QuestionsScreen(){
 
   const [checkAnswers, setCheckAnswers] = React.useState(false)
 
   const [questionData, setQuestionData] = React.useState([])
 
-  console.log(questionData)
-  console.log(checkAnswers)
+  // console.log(questionData)
+  // console.log(checkAnswers)
 
   /* Calling open trivia database API */
   React.useEffect(() => {
@@ -35,3 +37,5 @@ export default function QuestionsScreen(){
     </>
   )
 }
+
+export default memo(QuestionsScreen)
