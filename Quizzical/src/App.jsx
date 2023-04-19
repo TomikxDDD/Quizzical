@@ -1,5 +1,6 @@
 import React from "react"
-import reactLogo from './assets/react.svg'
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+
 import './App.css'
 
 import WelcomeScreen from "./components/WelcomeScreen.jsx"
@@ -7,18 +8,14 @@ import QuestionsScreen from "./components/QuestionsScreen.jsx"
 
 function App() {
 
-  const [showWelcomeScreen, setShowWelcomeScreen] = React.useState(true)
-
-  // console.log(showWelcomeScreen)
-
-  function startGame(){
-    setShowWelcomeScreen(oldShowWelcomeScreen => !oldShowWelcomeScreen)
-  }
-
   return (
     <div className="app-container">
-      {showWelcomeScreen && <WelcomeScreen startGame={startGame}/>}
-      {!showWelcomeScreen && <QuestionsScreen />}
+      <BrowserRouter>
+        <Routes>
+          <Route exact path='/' element={<WelcomeScreen/>} />
+          <Route path='/questions' element={<QuestionsScreen />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }

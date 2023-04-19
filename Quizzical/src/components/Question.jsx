@@ -1,14 +1,12 @@
-import React from "react";
+import { useState, useEffect} from "react"
 import {nanoid} from "nanoid"
 
 import AnswerField from "./AnswerField";
 import {shuffleArray, decodeTextFromAPI} from "../functions/Functions.js"
 
-import { memo } from "react";
-
 function Question(props){
 
-  const [answers, setAnswers] = React.useState([]) // React state for storing each answer as an object inside of an array of questions
+  const [answers, setAnswers] = useState([]) // React state for storing each answer as an object inside of an array of questions
 
   /**
    * Function to select a single answer within one question. 
@@ -17,7 +15,6 @@ function Question(props){
    */
   function selectAnswer(id){
     setAnswers(oldAnswers => oldAnswers.map(oldAnswer => {
-      console.log(id, oldAnswer.id)
       if (id == oldAnswer.id) {
         return {...oldAnswer,
                 selected: true}
@@ -35,7 +32,7 @@ function Question(props){
   answersTxt = shuffleArray(answersTxt)
 
   // Update the answers state, right now only at the begginning of the application
-  React.useEffect(() => {
+  useEffect(() => {
     let objAnswers = answersTxt.map(ansTxt => {
       return {id:nanoid(),
         answerTxt: ansTxt,
@@ -65,4 +62,4 @@ function Question(props){
     </section>
   )
 }
-export default memo(Question)
+export default Question

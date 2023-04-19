@@ -1,21 +1,16 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {nanoid} from "nanoid"
 
-import Question from "./Question.jsx"
-
-import { memo } from "react";
+import Question from "./Question.jsx";
 
 function QuestionsScreen(){
 
-  const [checkAnswers, setCheckAnswers] = React.useState(false)
+  const [checkAnswers, setCheckAnswers] = useState(false)
 
-  const [questionData, setQuestionData] = React.useState([])
-
-  // console.log(questionData)
-  // console.log(checkAnswers)
+  const [questionData, setQuestionData] = useState([])
 
   /* Calling open trivia database API */
-  React.useEffect(() => {
+  useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5")
       .then(res => res.json())
       .then(data => setQuestionData(data.results))
@@ -33,9 +28,9 @@ function QuestionsScreen(){
         <h2 className="question-screen-heading"> Test your skills </h2>
         {questions} 
       </main>
-      <button type="button" className="btn-check-answers"> Check answers </button>
+      <button type="button" className="btn btn-check-answers"> Check answers </button>
     </>
   )
 }
 
-export default memo(QuestionsScreen)
+export default QuestionsScreen

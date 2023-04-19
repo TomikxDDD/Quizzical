@@ -1,5 +1,10 @@
 /*Welcome screen*/
 
+:root{
+  --clr-theme: #4D5B9E;
+  --clr-theme-dark: #333c6b;
+}
+
 body{
   min-height: 100vh;
   display: flex;
@@ -33,21 +38,25 @@ body{
 
 }
 
-.start-quiz-button{
-  height: 50px;
-  width: 200px;
-  border-radius: 15px;
-
-  background: #4D5B9E;
-
-  color: #F5F7FB;
+.btn{
+  border: none;
+  border-radius: 100rem;
   font-family: Inter;
-  font-size: 16px;
+  font-size: 1rempx;
   font-weight: 500;
-  line-height: 19px;
-  letter-spacing: 0em;
   text-align: center;
+  padding: 0.5em 1.25em;
+  cursor: pointer;
+  transition: 0.3s ease;
+  background: var(--clr-theme);
+  color: #F5F7FB;
 }
+
+.btn:hover {
+  background: var(--clr-theme-dark);
+  color: #fff;
+}
+
 
 /* QuestionScreen */
 .question-screen-container{
@@ -64,8 +73,6 @@ body{
   font-family: Karla;
   font-size: 2rem;
   font-weight: 700;
-  line-height: 19px;
-  letter-spacing: 0em;
   text-align: center;
 }
 
@@ -82,8 +89,6 @@ body{
   font-family: Karla;
   font-size: 1rem;
   font-weight: 700;
-  line-height: 19px;
-  letter-spacing: 0em;
   text-align: left;
 }
 
@@ -106,7 +111,7 @@ body{
   padding: 0.25rem 0.75rem;
 
   border-radius: 0.5rem;
-  border: 0.794239px solid #4D5B9E;
+  border: 0.794239px solid var(--clr-theme);
 
   background: transparent;
   color: #293264;
@@ -114,8 +119,6 @@ body{
   font-family: Inter;
   font-size: 0.75rem;
   font-weight: 500;
-  line-height: 1rem;
-  letter-spacing: 0em;
   text-align: center;
 }
 
@@ -126,17 +129,17 @@ body{
 }
 
 .answer:active{
-  background-color: #4D5B9E;
+  background-color: var(--clr-theme);
   color: white;
   cursor: pointer;
 }
 
 .answer-selected{
-  background: #4D5B9E;
+  background: var(--clr-theme);
   color: white;
 }
 .answer-selected:hover{
-  background: #394375;
+  background: var(--clr-theme-dark);
   color: white;
 }
 
@@ -146,32 +149,5 @@ body{
   width: 100%;
   background: #DBDEF0;
   margin: 1rem 0;
-
-
 }
 
-.btn-check-answers{
-  width: 180px;
-  height: 35px;
-
-  background: #4D5B9E;
-  border-radius: 10px;
-  border: none;
-  margin-top: 0.5rem;
-  cursor: pointer;
-
-  padding: 0.5rem 1.5rem;
-
-  color: #F5F7FB;
-  font-family: Inter;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 12px;
-  letter-spacing: 0em;
-  text-align: center;
-}
-
-.btn-check-answers:hover{
-  background: #236;
-  font-weight: 700;
-}

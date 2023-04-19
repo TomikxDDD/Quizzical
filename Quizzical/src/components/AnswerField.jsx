@@ -1,5 +1,3 @@
-import React from "react";
-import { memo } from "react";
 
 import { decodeTextFromAPI } from "../functions/Functions";
 
@@ -9,7 +7,6 @@ function AnswerField(props){
 
   let classNameAttr = props.selected ? "answer answer-selected" : "answer"
 
-  console.log(props.selected, classNameAttr)
   return(
     <>
       <p className={classNameAttr} onClick={() => props.handleClick(props.id)}> {decodedAnswerTxt} </p>
@@ -17,4 +14,4 @@ function AnswerField(props){
   )
 }
 
-export default memo(AnswerField)
+export default AnswerField
