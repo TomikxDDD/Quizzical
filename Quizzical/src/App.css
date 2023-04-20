@@ -21,29 +21,22 @@ body{
 
 .welcome-screen-h2{
   font-family: Karla;
-  font-size: 31px;
+  font-size: 2rem;
   font-weight: 700;
-  line-height: 37px;
-  letter-spacing: 0em;
   text-align: center;
 }
 
 .welcome-screen-p{
   font-family: Inter;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19px;
-  letter-spacing: 0em;
+  font-size: 1rem;
   text-align: center;
-
 }
 
 .btn{
   border: none;
   border-radius: 100rem;
   font-family: Inter;
-  font-size: 1rempx;
-  font-weight: 500;
+  font-size: 1rem;
   text-align: center;
   padding: 0.5em 1.25em;
   cursor: pointer;
@@ -60,13 +53,11 @@ body{
 
 /* QuestionScreen */
 .question-screen-container{
+  width: min(90%, 1200px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: left;
-  margin: 2rem;
-
-  max-width: 1200px;
 }
 
 .question-screen-heading{
@@ -82,7 +73,7 @@ body{
 }
 
 .question-text{
-  color: #293264;
+  color: var(--clr-theme-dark);
   margin-top: 0.25rem;
   margin-bottom: 0.75rem;
 
@@ -94,27 +85,26 @@ body{
 
 .answers-container{
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: flex-start;
 }
 
 .answer{
-  height: 1.5rem;
+  /* height: 1.5rem; */
   min-width: 2rem;
-  margin: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  padding: 0.25rem 0.75rem;
+  
+  margin: 0;
+  padding: 0.5rem 1rem;
 
   border-radius: 0.5rem;
-  border: 0.794239px solid var(--clr-theme);
+  border: 1px solid var(--clr-theme);
 
   background: transparent;
-  color: #293264;
+  color: var(--clr-theme-dark);
 
   font-family: Inter;
   font-size: 0.75rem;
@@ -122,9 +112,9 @@ body{
   text-align: center;
 }
 
-
 .answer:hover{
   background-color: #D6DBF5;
+  color: var(--clr-theme);
   cursor: pointer;
 }
 
@@ -134,15 +124,31 @@ body{
   cursor: pointer;
 }
 
-.answer-selected{
-  background: var(--clr-theme);
-  color: white;
-}
+
 .answer-selected:hover{
   background: var(--clr-theme-dark);
   color: white;
 }
 
+.answer-correct{
+  background-color: green;
+  color: white;
+}
+
+.answer-correct:hover{
+  background-color: rgb(1, 100, 1);
+  color: white;
+}
+
+.answer-incorrect{
+  background-color: red;
+  color: white;
+}
+
+.answer-incorrect:hover{
+  background-color: rgb(225, 0, 0);
+  color: white;
+}
 
 .question-separator{
   height: 2px;

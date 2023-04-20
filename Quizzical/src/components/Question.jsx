@@ -4,53 +4,62 @@ import {nanoid} from "nanoid"
 import AnswerField from "./AnswerField";
 import {shuffleArray, decodeTextFromAPI} from "../functions/Functions.js"
 
-function Question(props){
+function Question({ questionData }){
 
   const [answers, setAnswers] = useState([]) // React state for storing each answer as an object inside of an array of questions
 
+  const [alreadyShuffled, setAlreadyShuffled] = useState(false)
+
+  const [correctAns, setCorrectAns] = useState('');
+
   /**
    * Function to select a single answer within one question. 
-   * If another function was selected, unselect it and select a currently clicked answer
+   * Evaluates, whether the answer is correct or incorrect
    * @param {*} id id of an answer
    */
   function selectAnswer(id){
-    setAnswers(oldAnswers => oldAnswers.map(oldAnswer => {
-      if (id == oldAnswer.id) {
+    let answerCorrect;
+    setAnswers(oldAnswers => oldAnswers.map(oldAnswer => {      
+      if (id === oldAnswer.id) {
+        answerCorrect = (oldAnswer.answerTxt === correctAns)
         return {...oldAnswer,
-                selected: true}
+                correct: answerCorrect,
+                selected: true
+        }
       } else {
         return {...oldAnswer,
+                correct: answerCorrect,
                 selected: false}
       }
     }))
   }
 
-  /* Prepare the array of answers (only texts) - combine correct and incorrect answers, shuffle them */
-  let correctAnswerTxt = props.questionData.correct_answer
-  let incorrectAnswersTxt = props.questionData.incorrect_answers
-  let answersTxt = [...incorrectAnswersTxt, correctAnswerTxt]
-  answersTxt = shuffleArray(answersTxt)
-
-  // Update the answers state, right now only at the begginning of the application
   useEffect(() => {
+    let correctAnswerTxt = questionData.correct_answer
+    setCorrectAns(correctAnswerTxt)
+    let incorrectAnswersTxt = questionData.incorrect_answers
+    let answersTxt = [...incorrectAnswersTxt, correctAnswerTxt]
+    if (!alreadyShuffled){
+      answersTxt = shuffleArray(answersTxt)
+      setAlreadyShuffled(true)
+    }
     let objAnswers = answersTxt.map(ansTxt => {
       return {id:nanoid(),
         answerTxt: ansTxt,
-        selected: false  
+        selected: false,
+        correct: false
       }
     })
     setAnswers(objAnswers)
-  }, [])
+  }, [alreadyShuffled])
 
   // Prepare an array of JSX AnswerField components
   let answerFields = answers.map(answer => {
-    return <AnswerField key={answer.id} id={answer.id} answerText={answer.answerTxt} selected={answer.selected} handleClick={selectAnswer}/>
+    return <AnswerField key={answer.id} id={answer.id} answerText={answer.answerTxt} selected={answer.selected} answeredCorrectly={answer.correct} handleClick={selectAnswer}/>
   }) 
-
-  // Decode the question text from API to HTML readable format
-  const decodedQuestionTxt = decodeTextFromAPI(props.questionData.question);
-
-  // Return JSX code 
+  
+  const decodedQuestionTxt = decodeTextFromAPI(questionData.question);
+  
   return(
     <section className="question-container">
         <h2 className="question-text"> {decodedQuestionTxt} </h2>
